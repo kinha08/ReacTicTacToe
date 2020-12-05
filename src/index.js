@@ -10,6 +10,25 @@ function Square(props) {
   );
 }
 
+function Position(props) {
+	const current = props.current;
+	let pos
+
+	if (current) {
+		pos = (<span className="position-selected">
+			{props.position}
+		</span>)
+	} else {
+		pos = (<span className="position">
+			{props.position}
+		</span>)
+	}
+
+	return (
+		pos		
+	);
+}
+
 class Board extends React.Component {
   renderSquare(i) {
     return (
@@ -49,11 +68,15 @@ class Game extends React.Component {
 		this.state = {
 			history: [
 				{
-				squares: Array(9).fill(null)
+				squares: Array(9).fill(null),
+				location: '',
+				currentPlayer: '',
 				}
 			],
 			stepNumber: 0,
-			xIsNext: true
+			xIsNext: true,
+			
+			
 		};
 	}
 	handleClick(i) {
@@ -67,11 +90,15 @@ class Game extends React.Component {
 		this.setState({
 			history: history.concat([
 				{
-					squares: squares
+					squares: squares,
+					location: getLocation(i),
+					currentPlayer: squares[i]
 				}
 			]),
 			stepNumber: history.length,
 			xIsNext: !this.state.xIsNext,
+			
+			
 		});
 	}
 
@@ -85,15 +112,18 @@ class Game extends React.Component {
   render() {
 		const history = this.state.history;
     const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
-		
-		const moves = history.map((step, move) => {
-			const desc = move ?
+		const winner = calculateWinner(current.squares);
+		const moves = history.map((step, move) => {	
+				const desc = move ?
 				'Go to move #' + move :
 				'Go to game Start';
 				return (
 					<li key={move}>
 						<button onClick={() => this.jumpTo(move)}>{desc}</button>
+							<Position 
+								position={step.currentPlayer + step.location} 
+								current={move === this.state.stepNumber}	
+							/>
 					</li>
 				);
 		});
@@ -128,6 +158,22 @@ ReactDOM.render(
   <Game />,
   document.getElementById('root')
 );
+
+function getLocation(pos) {
+	const positions = [
+		' in Row 1, Col 1',
+		' in Row 1, Col 2',
+		' in Row 1, Col 3',
+		' in Row 2, Col 1',
+		' in Row 2, Col 2',
+		' in Row 2, Col 3',
+		' in Row 3, Col 1',
+		' in Row 3, Col 2',
+		' in Row 3, Col 3',
+	]
+
+	return positions[pos]
+}
 
 function calculateWinner(squares) {
   const lines = [
