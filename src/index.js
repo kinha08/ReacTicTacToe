@@ -10,6 +10,14 @@ function Square(props) {
   );
 }
 
+function ToggleButton(props) {
+	return (
+		<button className="sort-button" onClick={props.onClick}>
+			{props.value}
+		</button>
+	);
+}
+
 function Position(props) {
 	const current = props.current;
 	let pos
@@ -98,8 +106,7 @@ class Game extends React.Component {
 			],
 			stepNumber: 0,
 			xIsNext: true,
-			
-			
+			isAscending: true,
 		};
 	}
 	handleClick(i) {
@@ -119,10 +126,15 @@ class Game extends React.Component {
 				}
 			]),
 			stepNumber: history.length,
-			xIsNext: !this.state.xIsNext,
-			
-			
+			xIsNext: !this.state.xIsNext,		
 		});
+	}
+
+	toggleClick() {
+		this.setState({
+			isAscending: !this.state.isAscending,
+		});
+
 	}
 
 	jumpTo(step) {
@@ -136,12 +148,14 @@ class Game extends React.Component {
 		const history = this.state.history;
     const current = history[this.state.stepNumber];
 		const winner = calculateWinner(current.squares);
+		const sortOrder = this.state.isAscending ? "Ascending" : "Descending"
 		const moves = history.map((step, move) => {	
 				const desc = move ?
 				'Go to move #' + move :
 				'Go to game Start';
 				return (
 					<li key={move}>
+						{move + 1 + ". "}
 						<button onClick={() => this.jumpTo(move)}>{desc}</button>
 							<Position 
 								position={step.currentPlayer + step.location} 
@@ -150,6 +164,12 @@ class Game extends React.Component {
 					</li>
 				);
 		});
+
+		if (this.state.isAscending) {
+			moves.sort()
+		} else {
+			moves.reverse()
+		}
 
 		let status
 		if (winner) {
@@ -168,6 +188,10 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
+					<ToggleButton
+						value={sortOrder}
+						onClick={() => this.toggleClick()}
+					/>
           <ol>{moves}</ol>
         </div>
       </div>
