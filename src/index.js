@@ -69,7 +69,7 @@ class Board extends React.Component {
 		}
 
 		return (
-			<div className="board-row">
+			<div key={squares.indexOf(row) + offset} className="board-row">
 				{squares}
 			</div>
 		);
@@ -151,7 +151,6 @@ class Game extends React.Component {
 				'Go to game Start';
 				return (
 					<li key={move}>
-						{move + 1 + ". "}
 						<button onClick={() => this.jumpTo(move)}>{desc}</button>
 							<Position 
 								position={step.currentPlayer + step.location} 
@@ -188,12 +187,14 @@ class Game extends React.Component {
 			/>
         </div>
         <div className="game-info">
-          <div>{status}</div>
+          <div className="status">{status}</div>
 					<ToggleButton
 						value={sortOrder}
 						onClick={() => this.toggleClick()}
 					/>
-          <ol>{moves}</ol>
+			<div className="moves-info">
+          		<ol className="moves">{moves}</ol>
+			</div>
         </div>
       </div>
 	);

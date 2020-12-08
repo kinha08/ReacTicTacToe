@@ -1,13 +1,18 @@
 body {
-    font: 14px "Century Gothic", Futura, sans-serif;
+    font: 1rem "Century Gothic", Futura, sans-serif;
     margin: 20px;
+    background-color: #59f7cd;
   }
   
   ol, ul {
-    padding-left: 30px;
+    /* margin: 0px; */
+    /* padding: 0px; */
     list-style: none;
   }
   
+  .board {
+    border: 10px solid #fff;
+  }
 
   .board-row:after {
     clear: both;
@@ -20,22 +25,23 @@ body {
   }
   
   .square {
-    background: #fff;
-    border: 1px solid #999;
+    background: #59f7cd;
+    border: 3px solid #d8fff5;
     float: left;
-    font-size: 52px;
+    font-size: 4rem;
     font-weight: bold;
     line-height: 34px;
-    height: 64px;
+    height: 6rem;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
     text-align: center;
-    width: 64px;
+    width: 6rem;
+    color: #fff;
   }
 
   .active {
-    background-color: yellow;
+    background-color: #0b926e5d;
   }
   
   .square:focus {
@@ -48,18 +54,78 @@ body {
   
   .game {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   
   .game-info {
-    margin-left: 20px;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .position {
-    margin-left: 2rem;
+    /* margin-left: 2rem; */
+ 
   }
 
   .position-selected {
     font-weight: bold;
-    margin-left: 2rem;
+  }
+  .status {
+    display: flex;
+    align-items:  center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    background-color: #0b926e;
+    color: white;
+    width: 20rem;
+    height: 3rem;
+  }
+
+  .sort-button {
+    border: 3px solid #005f46;
+    color: #005f46;
+    background-color: #ffffff;
+    width: 20rem;
+    height: 3rem;
+    font-size: 1.3rem;
+    transition: 0.8s;
+  }
+
+  .sort-button:hover {
+    border: 3px solid #fff;
+    background-color: #005f46;
+    color: #fff;
+    outline: none;
+  }
+
+  .moves-info {
+    margin-top: 1rem;
+    border: 3px solid #005f46;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: sapce-between;
+  }
+
+  .moves {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 1px;
+  }
+
+  .moves button {
+    background-color: white;
+    border: 2px solid #005f46;
+    border-radius: 5px;
+    height:2rem;
+    padding: 0 0.6rem;
+    /* width: 100%; */
+
   }
